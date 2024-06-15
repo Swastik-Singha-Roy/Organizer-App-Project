@@ -1,0 +1,317 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: white;
+}
+
+html, body {
+    height: 100%;
+    background-color: #1c1e2a; /* Ensure the background color is consistent */
+}
+
+a {
+    font-size: 30px;
+    background-color: #ff9900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    width: 33%;
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #ddd;
+    color: #FFB800;
+    transform: scale(1.1);
+}
+
+.root {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    background-color: #1c1e2a;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.navBar {
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    background-color: #fcba06;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    animation: slideInFromTop 0.5s ease-in-out;
+}
+
+@keyframes slideInFromTop {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.notes-container {
+    box-shadow: 5px 5px rgba(132, 132, 132, 0.4);
+    background-color: white;
+    color: #000;
+    border-radius: 25px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-width: 95%;
+    max-width: 95%;
+    flex: 1;
+    animation: fadeInUp 0.5s ease-in-out;
+    transition: transform 0.3s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+.notes-container.deleted {
+    animation: fadeOutDown 0.5s ease-in-out forwards;
+}
+
+.notes-container button {
+    margin-top: 5px;
+    background-color: #000;
+    color: white;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.notes-container button:hover {
+    background-color: #ddd;
+    color: #FFB800;
+    transform: scale(1.1);
+}
+
+.notes-container:last-child {
+    margin-bottom: 80px; /* Add bottom margin to the last counter */
+}
+
+.notesClass {
+    margin-left: 5%;
+    margin-top: 70px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#modal-content {
+    display: none;
+    background-color: #fcba06;
+    position: fixed;
+    top: 5%;
+    left: 10%;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 75%;
+    border-radius: 10px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeInModal {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#modal-content.show {
+    display: block;
+    animation: fadeInModal 0.5s ease-in-out;
+}
+
+.close {
+    color: #fff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modal-content p {
+    display: inline-block;
+    color: black;
+    font-size: 35px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+#notesTitleInput {
+    font-size: 35px;
+    color: black;
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#notesContentInput {
+    font-size: 25px;
+    color: black;
+    width: 95%;
+    min-width: 95%;
+    max-width: 95%;
+    height: 45vh;
+    min-height: 70%;
+    max-height: 70%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#submitNotes {
+    background-color: #c99000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 150px;
+    height: 50px;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+#submitNotes:hover {
+    background-color: #ddd;
+    color: #FFB800;
+    transform: scale(1.05);
+}
+
+#create {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    border: 0px;
+    border-radius: 50px;
+    position: fixed;
+    height: 75px;
+    width: 75px;
+    right: 20px;
+    bottom: 20px;
+    vertical-align: top;
+    background-color: #fcba06;
+    animation: fadeIn 0.5s ease-in-out;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+#create:hover {
+    background-color: #ddd;
+    color: #FFB800;
+    transform: scale(1.1);
+}
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 600px) {
+    .notesClass {
+        margin-top: 10px; /* Adjust top margin for the notes container */
+        margin-left: 0;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .notes-container {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    #modal-content {
+        left: 7%;
+        top: 5%;
+    }
+
+    .navBar {
+        position: fixed;
+        top: auto; /* Ensure it stays fixed at the bottom */
+        bottom: 0; /* Position the navbar at the bottom */
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background-color: #fcba06;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+        animation: slideInFromBottom 0.5s ease-in-out;
+    }
+
+    @keyframes slideInFromBottom {
+        from {
+            transform: translateY(50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    #create {
+        position: fixed;
+        bottom: 70px; /* Place it above the navbar */
+        right: 10px;
+        height: 60px;
+        width: 60px;
+        font-size: 24px;
+    }
+}
