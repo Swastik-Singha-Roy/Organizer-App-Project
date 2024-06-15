@@ -1,329 +1,168 @@
-* {
-    margin: 0;
-    padding: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    color: white;
+document.getElementById('create').addEventListener('click', showModal);
+document.getElementById('submitCounterName').addEventListener('click', handleCounterNameSubmit);
+document.querySelector('.close').addEventListener('click', hideModal);
+
+let CounterNum = 0;
+
+function showModal() {
+    document.getElementById('nameModal').style.display = 'block';
 }
 
-html, body {
-    height: 100%;
-    background-color: #1c1e2a; /* Ensure the background color is consistent */
+function hideModal() {
+    document.getElementById('nameModal').style.display = 'none';
 }
 
-a {
-    font-size: 30px;
-    background-color: #ff9900;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90%;
-    width: 33%;
-    text-decoration: none;
+function handleCounterNameSubmit() {
+    const counterName = document.getElementById('counterNameInput').value;
+    createCounter(counterName);
+    document.getElementById('counterNameInput').value = '';
+    hideModal();
 }
 
-a:hover {
-    background-color: #ddd;
-    color: #FFB800;
-    transform: scale(1.1);
+function updateCount(counterId) {
+    let counterElement = document.getElementById(counterId);
+    let count = parseInt(counterElement.textContent, 10);
+    count++;
+    counterElement.innerText = count;
+    saveCounters();
 }
 
-.root {
-    min-height: 100vh; /* Ensure it takes at least the full viewport height */
-    display: flex;
-    background-color: #1c1e2a;
-    animation: fadeIn 1s ease-in-out;
+function decreaseCount(counterId) {
+    let counterElement = document.getElementById(counterId);
+    let count = parseInt(counterElement.textContent, 10);
+    if (count > 0) count--;
+    counterElement.innerText = count;
+    saveCounters();
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+function resetCount(counterId) {
+    let counterElement = document.getElementById(counterId);
+    counterElement.innerText = '0';
+    saveCounters();
 }
 
-button {
-    border-width: 1px;
-    border-style: solid;
-    border-color: white;
-    font-weight: 600;
-    font-size: 20px;
-    height: 50px;
-    width: 70px;
-    margin: 2px;
-    border-radius: 50px;
-    background-color: #ff9900;
-    color: white;
-    transition: background-color 0.3s, color 0.3s, transform 0.3s;
-}
+function createCounter(counterName) {
+    if (CounterNum < 100) {
+        CounterNum++;
+        let counterContainer = document.getElementById("counterContainer");
+        let clonedCounterContainer = document.createElement('div');
 
-button:hover {
-    background-color: #ddd;
-    color: #FFB800;
-    transform: scale(1.1);
-}
+        let counterNameElement = document.createElement('h2');
+        counterNameElement.innerText = counterName;
+        clonedCounterContainer.appendChild(counterNameElement);
 
-.navBar {
-    position: fixed;
-    width: 100%;
-    height: 50px;
-    background-color: #fcba06;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    animation: slideIn 0.5s ease-in-out;
-    z-index: 10;
-}
+        let clonedCounter = document.createElement('div');
+        clonedCounter.innerText = '0';
+        clonedCounter.style.fontSize = '55px';
+        let uniqueId = 'Counter' + new Date().getTime();
+        clonedCounter.id = uniqueId;
+        clonedCounterContainer.appendChild(clonedCounter);
 
-@keyframes slideIn {
-    from {
-        transform: translateY(-50px);
-    }
-    to {
-        transform: translateY(0);
-    }
-}
+        let incrementButton = document.createElement('button');
+        incrementButton.innerText = '+';
+        incrementButton.addEventListener('click', function() {
+            updateCount(uniqueId);
+        });
 
-.navbar a {
-    text-decoration: none;
-}
+        let decrementButton = document.createElement('button');
+        decrementButton.innerText = '-';
+        decrementButton.addEventListener('click', function() {
+            decreaseCount(uniqueId);
+        });
 
-.counter-container {
-    box-shadow: 5px 5px rgba(132, 132, 132, 0.4);
-    color: rgba(202, 202, 206, 255);
-    background-color: rgba(255, 208, 39, 255);
-    border-radius: 25px;
-    padding: 10px;
-    margin: 10px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 300px;
-    background-color: #fcba06;
-    border-radius: 15px;
-    width: 300px;
-    animation: fadeInUp 0.5s ease-in-out;
-    position: relative;
-    transition: transform 0.3s;
-}
+        let resetButton = document.createElement('button');
+        resetButton.innerText = 'Reset';
+        resetButton.addEventListener('click', function() {
+            resetCount(uniqueId);
+        });
 
-.counter-container:hover {
-    transform: scale(1.05);
-}
+        let deleteButton = document.createElement('button');
+        deleteButton.innerText = 'Delete';
+        deleteButton.addEventListener('click', function() {
+            clonedCounterContainer.remove();
+            CounterNum--;
+            saveCounters();
+        });
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+        clonedCounterContainer.appendChild(incrementButton);
+        clonedCounterContainer.appendChild(decrementButton);
+        clonedCounterContainer.appendChild(resetButton);
+        clonedCounterContainer.appendChild(deleteButton);
+
+        counterContainer.appendChild(clonedCounterContainer);
+        clonedCounterContainer.classList.add('counter-container');
+        saveCounters();
+    } else {
+        alert("You cannot add any more counters!");
     }
 }
 
-@keyframes fadeOutDown {
-    from {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(20px);
-    }
+function saveCounters() {
+    let counters = [];
+    document.querySelectorAll(".counter-container").forEach(counterContainer => {
+        let counterName = counterContainer.querySelector('h2').innerText;
+        let counter = counterContainer.querySelector('div');
+        let count = counter.innerText;
+        let id = counter.id;
+        counters.push({ id, count, counterName });
+    });
+    localStorage.setItem('counters', JSON.stringify(counters));
 }
 
-.counter-container.deleted {
-    animation: fadeOutDown 0.5s ease-in-out;
-}
+function loadCounters() {
+    let savedCounters = localStorage.getItem('counters');
+    if (savedCounters) {
+        savedCounters = JSON.parse(savedCounters);
+        savedCounters.forEach(savedCounter => {
+            CounterNum++;
+            let counterContainer = document.getElementById("counterContainer");
+            let clonedCounterContainer = document.createElement('div');
 
-.counter-container:last-child {
-    margin-bottom: 50px; /* Add bottom margin to the last counter */
-}
+            let counterName = document.createElement('h2');
+            counterName.innerText = savedCounter.counterName;
+            clonedCounterContainer.appendChild(counterName);
 
-.CounterClass {
-    margin-top: 65px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+            let clonedCounter = document.createElement('div');
+            clonedCounter.innerText = savedCounter.count;
+            clonedCounter.style.fontSize = '55px';
+            clonedCounter.id = savedCounter.id;
+            clonedCounterContainer.appendChild(clonedCounter);
 
-#counterContainer {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
+            let incrementButton = document.createElement('button');
+            incrementButton.innerText = '+';
+            incrementButton.addEventListener('click', function() {
+                updateCount(savedCounter.id);
+            });
 
-#counterContainer h2 {
-    text-align: center;
-}
+            let decrementButton = document.createElement('button');
+            decrementButton.innerText = '-';
+            decrementButton.addEventListener('click', function() {
+                decreaseCount(savedCounter.id);
+            });
 
-#create {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-    border: 0px;
-    border-radius: 50px;
-    position: fixed;
-    height: 75px;
-    width: 75px;
-    right: 20px;
-    bottom: 20px;
-    vertical-align: top;
-    background-color: #fcba06;
-    transition: transform 0.3s;
-}
+            let resetButton = document.createElement('button');
+            resetButton.innerText = 'Reset';
+            resetButton.addEventListener('click', function() {
+                resetCount(savedCounter.id);
+            });
 
-#create:hover {
-    transform: scale(1.1);
-}
+            let deleteButton = document.createElement('button');
+            deleteButton.innerText = 'Delete';
+            deleteButton.addEventListener('click', function() {
+                clonedCounterContainer.remove();
+                CounterNum--;
+                saveCounters();
+            });
 
-#Counter {
-    font-size: 55px;
-}
+            clonedCounterContainer.appendChild(incrementButton);
+            clonedCounterContainer.appendChild(decrementButton);
+            clonedCounterContainer.appendChild(resetButton);
+            clonedCounterContainer.appendChild(deleteButton);
 
-#nameModal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.8);
-    padding-top: 60px;
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-.modal-content {
-    background-color: #FFB800;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 30%;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    animation: slideDown 0.5s ease-in-out;
-}
-
-@keyframes slideDown {
-    from {
-        transform: translateY(-100px);
-    }
-    to {
-        transform: translateY(0);
+            counterContainer.appendChild(clonedCounterContainer);
+            clonedCounterContainer.classList.add('counter-container');
+        });
     }
 }
 
-.close {
-    color: #fff;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.modal-content p {
-    color: #FFF;
-    font-size: 20px;
-    margin-bottom: 20px;
-}
-
-#counterNameInput {
-    color: black;
-    width: 95%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-#submitCounterName {
-    background-color: #FFF;
-    color: #FFB800;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s, transform 0.3s;
-}
-
-#submitCounterName:hover {
-    background-color: #ddd;
-    color: #FFB800;
-    transform: scale(1.05);
-}
-
-@media (max-width: 600px) {
-    .root {
-        background-color: #1c1e2a; /* Ensure background color stays the same */
-    }
-    
-    #counterContainer {
-        display: block;
-        gap: 10px;
-    }
-
-    .CounterClass {
-        margin-top: 0;
-        height: 100%;
-        width: 100vh;
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 10px;
-    }
-
-    #counterNameInput {
-        color: black;
-        margin-right: 15px;
-        width: 90%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
-
-    .navBar {
-        z-index: 10;
-        position: fixed;
-        top: auto;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 50px;
-        background-color: #fcba06;
-        animation: slideInFromBottom 0.5s ease-in-out;
-    }
-
-    @keyframes slideInFromBottom {
-        from {
-            transform: translateY(50px);
-        }
-        to {
-            transform: translateY(0);
-        }
-    }
-
-    #create {
-        position: fixed;
-        bottom: 70px;
-        right: 10px;
-        height: 60px;
-        width: 60px;
-        font-size: 24px;
-    }
-}
+window.addEventListener('load', loadCounters);
