@@ -74,6 +74,7 @@ button:hover {
     align-items: center;
     justify-content: space-evenly;
     animation: slideIn 0.5s ease-in-out;
+    z-index: 10;
 }
 
 @keyframes slideIn {
@@ -150,7 +151,6 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
 
 #counterContainer {
