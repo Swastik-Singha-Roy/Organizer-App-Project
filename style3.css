@@ -7,7 +7,7 @@
 
 html, body {
     height: 100%;
-    background-color: #1c1e2a; /* Ensure the background color is consistent */
+    background-color: #1c1e2a;
 }
 
 a {
@@ -35,15 +35,6 @@ a:hover {
     animation: fadeIn 1s ease-in-out;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
 .navBar {
     top: 0;
     left: 0;
@@ -58,19 +49,11 @@ a:hover {
     animation: slideInFromTop 0.5s ease-in-out;
 }
 
-@keyframes slideInFromTop {
-    from {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+#notesContainer {
+    width: 95%;
 }
 
 .notes-container {
-    box-shadow: 5px 5px rgba(132, 132, 132, 0.4);
     background-color: white;
     color: #000;
     border-radius: 25px;
@@ -86,39 +69,14 @@ a:hover {
     transition: transform 0.3s;
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeOutDown {
-    from {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-}
-
-.notes-container.deleted {
-    animation: fadeOutDown 0.5s ease-in-out forwards;
-}
-
 .notes-container button {
+    border: #1c1e2a;
     margin-top: 5px;
     background-color: #000;
     color: white;
-    height: 40px;
+    height: 30px;
     width: 40px;
-    border-radius: 50%;
+    border-radius: 25px;
     transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
 
@@ -129,7 +87,7 @@ a:hover {
 }
 
 .notes-container:last-child {
-    margin-bottom: 80px; /* Add bottom margin to the last counter */
+    margin-bottom: 80px;
 }
 
 .notesClass {
@@ -153,17 +111,6 @@ a:hover {
     width: 75%;
     border-radius: 10px;
     animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeInModal {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
 }
 
 #modal-content.show {
@@ -255,15 +202,12 @@ a:hover {
 }
 
 #create:hover {
-    background-color: #ddd;
-    color: #FFB800;
     transform: scale(1.1);
 }
 
-/* Media Queries for Mobile Devices */
 @media (max-width: 600px) {
     .notesClass {
-        margin-top: 10px; /* Adjust top margin for the notes container */
+        margin-top: 20px;
         margin-left: 0;
         width: 100%;
         padding: 0 10px;
@@ -282,8 +226,8 @@ a:hover {
 
     .navBar {
         position: fixed;
-        top: auto; /* Ensure it stays fixed at the bottom */
-        bottom: 0; /* Position the navbar at the bottom */
+        top: auto;
+        bottom: 0;
         left: 0;
         width: 100%;
         height: 50px;
@@ -295,23 +239,65 @@ a:hover {
         animation: slideInFromBottom 0.5s ease-in-out;
     }
 
-    @keyframes slideInFromBottom {
-        from {
-            transform: translateY(50px);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-
     #create {
         position: fixed;
-        bottom: 70px; /* Place it above the navbar */
+        bottom: 70px;
         right: 10px;
         height: 60px;
         width: 60px;
         font-size: 24px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromTop {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInModal {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInFromBottom {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
