@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.close').addEventListener('click', hideModal);
     document.getElementById('submitNotes').addEventListener('click', handleNotesSubmit);
 
-    // Load notes from localStorage on page load
     loadNotesFromStorage();
 });
 
@@ -19,14 +18,16 @@ function handleNotesSubmit() {
     const notesTitle = document.getElementById('notesTitleInput').value;
     const notesContent = document.getElementById('notesContentInput').value;
     
-    // Create the note and save to localStorage
-    createNote(notesTitle, notesContent);
-    saveNoteToStorage(notesTitle, notesContent);
-    
-    // Reset input fields and hide modal
-    document.getElementById('notesTitleInput').value = '';
-    document.getElementById('notesContentInput').value = '';
-    hideModal();
+    if (notesContent !== '' || notesTitle !== '') {
+        createNote(notesTitle, notesContent);
+        saveNoteToStorage(notesTitle, notesContent);
+
+        document.getElementById('notesTitleInput').value = '';
+        document.getElementById('notesContentInput').value = '';
+        hideModal();
+    } else {
+        alert("Note cannot be empty!");
+    }
 }
 
 function createNote(notesTitle, notesContent) {
@@ -46,7 +47,6 @@ function createNote(notesTitle, notesContent) {
     let deleteButton = document.createElement('button');
     deleteButton.innerText = 'X';
     deleteButton.addEventListener('click', function() {
-        // Remove the note from UI and localStorage
         noteDiv.remove();
         removeNoteFromStorage(notesTitle);
     });
@@ -54,7 +54,6 @@ function createNote(notesTitle, notesContent) {
     noteDiv.appendChild(title);
     noteDiv.appendChild(content);
     noteDiv.appendChild(deleteButton);
-
     notesContainer.appendChild(noteDiv);
 }
 
